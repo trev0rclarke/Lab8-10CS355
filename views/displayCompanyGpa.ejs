@@ -1,0 +1,20 @@
+<div>
+    <% if(rs.length > 0) { %>
+    <table border="1">
+        <tr><th>Name</th><th>MinGPA, MaxGPA</th><th>AvgGPA</th></tr>
+        <% for (var i=0; rs.length > i; i++) { %>
+        <tr>
+            <td><a href="/companies?company=<%= rs[i].company %>"> <%= rs[i].company%></a> </td>
+            <td><%= rs[i].MinGPA %>, <%= rs[i].MaxGPA %></td>
+            <td><%= rs[i].AvgGPA %></td>
+        </tr>
+        <% } %>
+    </table>
+    <% } else { %>
+    <!--No accounts are entered into the Account database table.-->
+    <% } %>
+</div>
+
+<div style="margin-top:10px;">
+    <a href="/account/create">Create New School</a>
+</div>

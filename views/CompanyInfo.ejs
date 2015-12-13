@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+<% if(rs.length > 0) { %>
+Name: <%= rs[0].company %><br />
+<% for (var i=0; rs.length > i; i++) { %>
+<tr>
+    <td>Location: <%= rs[i].street%> <%= rs[i].city%> <%= rs[i].zip%> <br /></td>
+</tr>
+<% } %>
+<!--Location: <%= rs[0].street%> <%= rs[0].city%> <%= rs[0].zip%> <br />-->
+<% } else { %>
+No account matched this company name <%= company %>
+<% } %>
+
+<% include partials/footer %>

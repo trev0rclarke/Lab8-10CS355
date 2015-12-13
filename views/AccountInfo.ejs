@@ -1,0 +1,6 @@
+<% if(rs.length > 0) { %>
+Name: <%= rs[0].fname %> <%= rs[0].lname %><br />
+Email: <%= rs[0].email %>
+<% } else { %>
+No account matched this account id <%= account_id %>.
+<% } %>
