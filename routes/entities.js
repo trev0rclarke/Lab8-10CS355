@@ -66,7 +66,7 @@ router.get('/edit', function(req, res) {
                 console.log(company_results);
                 var data = {
                     company: company_results,
-                    address: address_results
+                    address: address_results,
                 };
                 res.render('companyFormEdit.ejs', data);
             })
@@ -79,6 +79,15 @@ router.get('/update', function(req, res) {
     companyDal.Update(req.query, function(err, result){
         var name = req.query.name;
         console.log("company name: " + name);
+        var alert_class = 'alert-danger';
+        if (err){
+            var data = {
+                message: "Error : " + err + "<br />",
+                alert_class: alert_class
+            };
+            res.render('companyFormEdit.ejs', data);
+        }
+
         companyDal.GetByCompany(name, function(err, company_results){
 
             if(err) {

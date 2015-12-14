@@ -111,7 +111,7 @@ exports.Insert = function(company_info, callback) {
                  passed to exports.Insert().
                  */
                 console.log(err);
-                callback(true);
+                callback(err + "<br /> Please choose a different company name.");
                 return;
             }
 
@@ -173,9 +173,22 @@ exports.InsertCompanyLocation = function(company_info, callback) {
 }
 
 exports.Update = function(company_info, callback) {
-    var query_data = [company_info.name, company_info.address_id, company_info.company_id];
-    var query = 'UPDATE company SET name = ?, address_id = ? WHERE company_id = ?';
-    connection.query(query, query_data, function(err, result) {
+
+
+    var addressSplit = company_info.address.split(",");
+    // addressSplit indexes:
+    // [0]: Street
+    // [1]: City
+    // [2]: Zip
+    // [3]: ORIGINAL NAME!
+    // company_info.name = new name to be set
+    var query = 'UPDATE company SET name = \'' + company_info.name + '\' ' + 'WHERE name = ' +
+        addressSplit[3] + ';' +
+        'UPDATE CompanyLocations SET street =' + addressSplit[0] + ',' +
+        'city = ' + addressSplit[1] + '\',' + 'zip = ' + addressSplit[2]
+        + ' WHERE company = \'' + company_info.name + '\';';
+    console.log("UPDATE QUERY: " + query);
+    connection.query(query, function(err, result) {
         if(err){
             console.log(err)
             callback(err);

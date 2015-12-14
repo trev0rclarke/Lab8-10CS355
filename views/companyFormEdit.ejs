@@ -9,7 +9,7 @@
 <form action="./update" class="col-md-4">
     <div class="form-group">
         <label for="street">Name:</label>
-        <input type="text" name="name" id="name" value="<%= company[0].name %>" class="form-control" />
+        <input type="text" name="name" id="name" value="<%= company[0].company %>" class="form-control" />
     </div>
     <label for="address">Address:</label>
     <select id="address" name="address">
@@ -21,7 +21,9 @@
                 selected = "selected";
             }
         %>
-        <option value="<%= entry.street %>" <%=selected %>><%= address %></option>
+        <option value="<%= '\'' + entry.street + '\', ' + '\'' + entry.city
+        + ',' + entry.zip + ', \'' + company[0].company + '\''%>"><%= address %></option>
+
         <% }); %>
     </select>
 
