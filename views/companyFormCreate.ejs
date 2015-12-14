@@ -14,7 +14,7 @@
        .if it was an absolute url, like http://google.com/, it would send the information to http://google.com/
        .if the action attribute was an empty string, or wasn't present, the form is submitted back to the same page.
 -->
-<form action="/entities/save/">
+<form action="entities/save/">
     <% /* .this is an EJS comment */ %>
     <% /* .the <label> tag is for sloppy clickers, so if the click the First Name text it will place their mouse cursor
      in the firstname input text box.  the for attribute must match the input text box it is associated with.
@@ -43,7 +43,8 @@
     <select id="location" name="location" class="form-control">
         <% location.forEach(function(entry) { %>
         <% var location = entry.street + " " + entry.city + ", " + entry.zip; %>
-        <option value="<%= entry.location %>"><%= location %></option>
+        <option value="<%= entry.street + '\', ' + '\'' + entry.city
+        + '\', ' + entry.zip%>"><%= location %></option>
         <% }); %>
     </select>
     <br />

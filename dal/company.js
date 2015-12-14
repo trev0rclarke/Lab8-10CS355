@@ -126,7 +126,7 @@ exports.Insert = function(company_info, callback) {
 }
 
 exports.Delete = function(company, callback){
-    var query = 'DELETE FROM CompanyLocations WHERE company = \'' + company + "'";
+    var query = 'DELETE FROM CompanyLocations WHERE company = \'' + company + "';";
     console.log(query);
     connection.query(query, function(err, result){
         if (err){
@@ -144,10 +144,8 @@ exports.InsertCompanyLocation = function(company_info, callback) {
     console.log(company_info);
     var dynamic_query = 'INSERT INTO CompanyLocations VALUES (' +
         '\'' + company_info.name +
-        '\'' + company_info.street +
-        '\'' + company_info.city +
-        '\'' + company_info.zip +
-        '\');';
+        '\', ' + '\'' + company_info.location +
+        ');';
     /* this console.log() will print out the query I'm about to send to the MySQL server via the connection.query() method.
      this log message can be copied and pasted into MySQL workbench to see if there are any SQL syntax errors.
      */console.log("test");
@@ -163,13 +161,28 @@ exports.InsertCompanyLocation = function(company_info, callback) {
                 /* this section of code prints out the error to the console and then runs the function that was
                  passed to exports.Insert().
                  */
-                console.log(err);
-                callback(true);
+                console.log(err)
+                callback(err);
                 return;
             }
+            else{
+                callback(err, result);
+            }
 
+        });
+}
 
-            callback(false, result);
+exports.Update = function(company_info, callback) {
+    var query_data = [company_info.name, company_info.address_id, company_info.company_id];
+    var query = 'UPDATE company SET name = ?, address_id = ? WHERE company_id = ?';
+    connection.query(query, query_data, function(err, result) {
+        if(err){
+            console.log(err)
+            callback(err);
+            return;
         }
-    );
+        else {
+            callback(err, result);
+        }
+    });
 }
